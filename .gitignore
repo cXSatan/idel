@@ -1,0 +1,83 @@
+# =============== #
+# Unity generated #
+# =============== #
+
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Unity auto-generated settings
+sysinfo.txt
+
+# ============ #
+# OS Specific  #
+# ============ #
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# ================= #
+# Visual Studio / JetBrains Rider #
+# ================= #
+
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+
+# JetBrains Rider files
+*.sln.iml
+
+# Crash Reports
+sysinfo.txt
+
+# =============== #
+# Built Game Data #
+# =============== #
+
+*.apk
+*.aab
+*.exe
+*.app
+*.unitypackage
+
+# ============ #
+# Git Specific #
+# ============ #
+
+# Git hooks, submodules, LFS
+.git/modules/
+*.orig
+
+# ============= #
+# Asset Store   #
+# ============= #
+
+*.unitypackage
+
+# =============== #
+# Custom folders you might ignore (optional) #
+# =============== #
+
+# Uncomment if you use a custom cache or export folder
+# /ExportedProject/
+# /Cache/
