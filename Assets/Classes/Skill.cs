@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Assets.Classes
 {
@@ -19,10 +20,11 @@ namespace Assets.Classes
         }
         public long Experience { get; set; }
 
-        private int minLevel = 1;
-        private int maxLevel = 99;
-        private long startExp = 1;
-        private long maxExp = 200000000;
+
+        protected int minLevel = 1;
+        protected int maxLevel = 200;
+        protected long startExp = 1;
+        protected long maxExp = 2000000000;
 
         public Skill(int id, string name, string description, int level = 1)
         {
@@ -34,27 +36,55 @@ namespace Assets.Classes
 
         private int GetLevelFromExperience()
         {
-            if (Experience <= startExp)
+            if (Experience <= 0)
                 return minLevel;
-            if (Experience >= maxExp)
-                return maxLevel;
 
-            double growthRate = Math.Pow((double)maxExp / startExp, 1.0 / (maxLevel - minLevel));
-            double level = Math.Log((double)Experience / startExp, growthRate) + minLevel;
+            // Precompute total weight using quadratic growth
+            double totalWeight = 0;
+            for (int i = minLevel + 1; i <= maxLevel; i++)
+            {
+                totalWeight += Math.Pow(i - minLevel, 2);
+            }
 
-            return Math.Max(minLevel, Math.Min((int)Math.Floor(level), maxLevel));
+            double cumulativeExp = 0;
+            for (int level = minLevel + 1; level <= maxLevel; level++)
+            {
+                double weight = Math.Pow(level - minLevel, 2);
+                double expForLevel = (weight / totalWeight) * maxExp;
+                cumulativeExp += expForLevel;
+
+                if (Experience < cumulativeExp)
+                    return level - 1; // Return the last level the player fully completed
+            }
+
+            return maxLevel;
         }
 
         public long GetExperienceForLevel(int level)
         {
             if (level <= minLevel)
-                return startExp;
-            if (level >= maxLevel)
-                return maxExp;
+                return 0;
 
-            double growthRate = Math.Pow((double)maxExp / startExp, 1.0 / (maxLevel - minLevel));
-            double xp = startExp * Math.Pow(growthRate, level - minLevel);
-            return (int)Math.Round(xp); // Always return integer XP
+            double totalWeight = 0;
+            for (int i = minLevel + 1; i <= maxLevel; i++)
+            {
+                totalWeight += Math.Pow(i - minLevel, 2);
+            }
+
+            double experience = 0;
+            for (int lvl = minLevel + 1; lvl <= level; lvl++)
+            {
+                double weight = Math.Pow(lvl - minLevel, 2);
+                double expForLevel = (weight / totalWeight) * maxExp;
+                experience += expForLevel;
+            }
+
+            return (int)Math.Floor(experience);
+        }
+
+        public virtual void Action(Player player)
+        {
+
         }
     }
 }

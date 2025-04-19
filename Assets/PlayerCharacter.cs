@@ -13,22 +13,28 @@ public class PlayerCharacter : MonoBehaviour
 
     public GameObject UISkillBox;
 
+    public GameObject ExpSection;
+    public GameObject ExpPrefab;
+
 
     private TextMeshProUGUI expObject;
     private TextMeshProUGUI levelObject;
+
     void Start()
     {
         Debug.Log("Player spawned with " + health + " HP.");
-        skillList.Add(new Skill(1, "woodcutting", "wc"));
+        skillList.Add(new Woodcutting());
 
         expObject = UISkillBox.transform.Find("Experience").gameObject.GetComponent<TextMeshProUGUI>();
         levelObject = UISkillBox.transform.Find("Level").gameObject.GetComponent<TextMeshProUGUI>();
     }
 
-    public void GainExp(int value)
+    public void GainExp(Skill skill, int value)
     {
-        skillList[0].Experience += value;
-        expObject.text = skillList[0].Experience.ToString();
-        levelObject.text = skillList[0].Level.ToString();
+        GameObject next = Instantiate(ExpPrefab, ExpSection.transform);
+        next.GetComponentInChildren<TextMeshProUGUI>().text = "+" + value; 
+        skill.Experience += value;
+        expObject.text = skill.Experience.ToString();
+        levelObject.text = skill.Level.ToString();
     }
 }

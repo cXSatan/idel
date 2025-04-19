@@ -15,7 +15,8 @@ public class PlayerInventory : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AddItem(new Item(1, "logs", "These are logs from trees"), 1); // test value
+        AddItem(Items.List[0], 1); // test value
+        AddItem(Items.List[1], 1); // test value
 
         Text = UIIventoryTab.transform.Find("Woodcutting").transform.Find("TextItem").GetComponent<TextMeshProUGUI>();
     }
